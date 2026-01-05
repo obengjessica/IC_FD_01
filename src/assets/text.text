@@ -1,0 +1,767 @@
+import React, { useState, useEffect } from 'react';
+import { Moon, Sun, Menu, X, Github, Linkedin, Mail, Phone, ExternalLink, Code, Palette, Video, Shield, ChevronDown, Download, Briefcase, Award, Camera, Sparkles, Send, MapPin, Calendar, CheckCircle } from 'lucide-react';
+
+// Import your images here
+// import logoImage from './assets/logo.png';
+// import profileImage from './assets/profile.jpg';
+// import project1Image from './assets/projects/project1.jpg';
+// etc...
+
+const Portfolio = () => {
+  const [darkMode, setDarkMode] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formStatus, setFormStatus] = useState('');
+  const [titleIndex, setTitleIndex] = useState(0);
+
+  const titles = [
+    "Front-End Developer",
+    "UI/UX Designer",
+    "Creative Technologist"
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTitleIndex((prev) => (prev + 1) % titles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'experience', 'projects', 'skills', 'contact'];
+      sections.forEach(section => {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.5 && rect.bottom > window.innerHeight * 0.5) {
+            setActiveSection(section);
+          }
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const projects = [
+    {
+      title: "Di Dwa Foodstuffs & Groceries",
+      description: "E-commerce web app for grocery delivery with responsive UI, login system, and product listing.",
+      tech: ["React", "Tailwind CSS", "Vite", "ShadCN UI"],
+      role: "Front-End Developer",
+      type: "Team Project",
+      highlights: ["Modular Components", "Mobile-First Design", "Image Slider"],
+      image: null // import your image: import project1 from './assets/projects/project1.jpg'
+    },
+    {
+      title: "Skin Scanner App",
+      description: "AI-based skincare assistant app with camera input for skin analysis and personalized recommendations.",
+      tech: ["React Native", "Expo", "Figma"],
+      role: "Front-End + UI/UX",
+      type: "Mobile App",
+      highlights: ["Camera Integration", "AI Analysis", "Product Recommendations"],
+      image: null // import your image
+    },
+    {
+      title: "Alpha Hour Consultation",
+      description: "Consultation booking platform with clean UI and easy navigation for pastoral services.",
+      tech: ["React", "Tailwind CSS"],
+      role: "Front-End + UI/UX",
+      type: "Client Project",
+      highlights: ["Booking System", "Clean Interface", "User-Friendly Navigation"],
+      image: null // import your image
+    },
+    {
+      title: "AltFit Clothing Brand",
+      description: "Gender-neutral streetwear brand with complete brand identity and e-commerce platform.",
+      tech: ["React", "Figma", "Canva"],
+      role: "Founder & Designer",
+      type: "Business",
+      highlights: ["Brand Identity", "E-commerce", "Marketing Campaigns"],
+      image: null // import your image
+    },
+    {
+      title: "Provision Shop Website",
+      description: "Practice project for building a local grocery UI with simple, mobile-friendly design.",
+      tech: ["React", "Tailwind CSS"],
+      role: "Developer + Designer",
+      type: "Practice Project",
+      highlights: ["Responsive Design", "Clean UI", "Fast Loading"],
+      image: null // import your image
+    },
+    {
+      title: "Jezzerr Labs Platform",
+      description: "Tech innovation hub platform focused on digital creativity and software solutions.",
+      tech: ["React", "Figma", "Tailwind CSS"],
+      role: "Co-Founder & Lead Designer",
+      type: "Business",
+      highlights: ["Innovation Hub", "Creative Tools", "Collaborative Projects"],
+      image: null // import your image
+    }
+  ];
+
+  const experiences = [
+    {
+      role: "Front-End Developer Intern",
+      company: "Interncred",
+      period: "Current",
+      description: "Building modern, responsive web applications and completing real-world frontend development tasks.",
+      icon: <Code className="w-6 h-6" />
+    },
+    {
+      role: "Front-End Developer & UI/UX Designer",
+      company: "Touch Stack Technologies",
+      period: "Internship",
+      description: "Designed user interfaces using Figma and implemented them with React and Tailwind CSS in Agile teams.",
+      icon: <Code className="w-6 h-6" />
+    },
+    {
+      role: "Media Intern",
+      company: "KFM TV",
+      period: "Internship",
+      description: "Professional video editing using Adobe Premiere Pro and studio environment setup.",
+      icon: <Video className="w-6 h-6" />
+    },
+    {
+      role: "Camera Operator Intern",
+      company: "Yamaco Media",
+      period: "Internship",
+      description: "Operated studio and field cameras, assisted in lighting setup and production planning.",
+      icon: <Camera className="w-6 h-6" />
+    },
+    {
+      role: "Co-Founder",
+      company: "Jezzerr Labs",
+      period: "Current",
+      description: "Tech innovation hub focused on digital creativity and software solutions.",
+      icon: <Sparkles className="w-6 h-6" />
+    },
+    {
+      role: "Founder",
+      company: "AltFit Clothing Brand",
+      period: "Current",
+      description: "Established gender-neutral streetwear fashion brand with complete brand identity.",
+      icon: <Briefcase className="w-6 h-6" />
+    }
+  ];
+
+  const skills = {
+    "Frontend Development": ["HTML5", "CSS3", "JavaScript (ES6+)", "React.js", "React Native", "Tailwind CSS", "ShadCN UI", "Vite"],
+    "Programming": ["Java", "C++", "Python"],
+    "UI/UX Design": ["Figma", "Adobe Photoshop", "Canva", "Framer Motion", "Responsive Design", "Accessibility"],
+    "Creative & Media": ["Video Editing", "3D Animation", "Graphic Design", "Camera Operations"],
+    "Tools & More": ["Git & GitHub", "Agile/Scrum", "VS Code", "Postman", "Cybersecurity Basics"]
+  };
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setMobileMenuOpen(false);
+  };
+
+  // Placeholder images - replace with your actual imports
+  const logoImage = null; // import logoImage from './assets/logo.png';
+  const profileImage = null; // import profileImage from './assets/profile.jpg';
+
+  const handleInputChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleDownloadCV = () => {
+    const cvContent = `
+JESSICA AFRIYIE
+Front-End Developer | UI/UX Designer | Creative Technologist
+
+Contact Information:
+Email: blaqluv233@gmail.com
+Phone: +233 591 286 053
+Location: Accra, Ghana
+LinkedIn: linkedin.com/in/obeng-jessica-afriyie-1375aa329
+GitHub: github.com/obengjessica
+
+PROFESSIONAL SUMMARY
+Passionate creative technologist and front-end developer specializing in transforming ideas into visually stunning and user-friendly digital experiences. I blend technology with art—from crafting intuitive interfaces to creating 3D animations and storytelling visuals. As a Cybersecurity Enthusiast, I prioritize secure coding practices and data protection in all projects.
+
+EDUCATION
+BSc in Mathematical Sciences (Computer Science Department)
+University of Ghana
+Expected Graduation: 2027
+
+PROFESSIONAL EXPERIENCE
+
+Front-End Developer Intern | Interncred (Current)
+• Building modern, responsive web applications
+• Completing real-world frontend development tasks
+• Implementing best practices in React and Tailwind CSS
+
+Front-End Developer & UI/UX Designer | Touch Stack Technologies (Internship)
+• Designed user interfaces using Figma
+• Implemented designs with React and Tailwind CSS in Agile teams
+• Collaborated on multiple client projects
+
+Media Intern | KFM TV (Internship)
+• Professional video editing using Adobe Premiere Pro
+• Studio environment setup and production support
+
+Camera Operator Intern | Yamaco Media (Internship)
+• Operated studio and field cameras
+• Assisted in lighting setup and production planning
+
+Co-Founder | Jezzerr Labs (Current)
+• Leading tech innovation hub focused on digital creativity
+• Developing software solutions for creative projects
+
+Founder | AltFit Clothing Brand (Current)
+• Established gender-neutral streetwear fashion brand
+• Created complete brand identity and e-commerce platform
+
+FEATURED PROJECTS
+
+Di Dwa Foodstuffs & Groceries
+• E-commerce web app for grocery delivery
+• Technologies: React, Tailwind CSS, Vite, ShadCN UI
+• Role: Front-End Developer + UI/UX Designer
+• Features: Responsive UI, login system, product listing, modular components
+
+Skin Scanner App
+• AI-based skincare assistant with camera integration
+• Technologies: React Native, Expo, Figma
+• Role: Front-End + UI/UX
+• Features: Skin analysis, personalized recommendations
+
+W2W Clothing App
+• AI-powered fashion app for virtual try-ons
+• Technologies: React, Tailwind CSS
+• Role: Front-End + UI/UX
+• Features: Wardrobe uploading, location-based recommendations
+
+Alpha Hour Consultation
+• Consultation booking platform for pastoral services
+• Technologies: React, Tailwind CSS
+• Role: Front-End + UI/UX
+• Features: Clean interface, booking system
+
+AltFit Clothing Brand Website
+• Gender-neutral streetwear e-commerce platform
+• Technologies: React, Figma, Canva
+• Role: Founder & Designer
+• Features: Brand identity, marketing campaigns
+
+Jezzerr Labs Platform
+• Tech innovation hub platform
+• Technologies: React, Figma, Tailwind CSS
+• Role: Co-Founder & Lead Designer
+• Features: Collaborative tools, creative solutions
+
+TECHNICAL SKILLS
+
+Frontend Development:
+HTML5, CSS3, JavaScript (ES6+), React.js, React Native, Tailwind CSS, ShadCN UI, Vite
+
+Programming Languages:
+Java, C++, Python
+
+UI/UX Design:
+Figma, Adobe Photoshop, Canva, Framer Motion, Responsive Design, Accessibility
+
+Creative & Media:
+Video Editing, 3D Animation, Graphic Design, Camera Operations
+
+Tools & Technologies:
+Git & GitHub, Agile/Scrum, VS Code, Postman, Cybersecurity Basics
+
+FUTURE VISION
+Dream Project: "Harmony" Programming Language
+Creating a new programming language where music and code unite—using musical patterns like chorus for loops, beats for iterations, and melody for syntax flow. Making coding feel like composing music: artistic, rhythmic, and expressive.
+
+ACHIEVEMENTS & INTERESTS
+• 6+ Professional Experiences
+• 7+ Completed Projects
+• Active in tech innovation and entrepreneurship
+• Passionate about secure coding and data protection
+• Committed to creating inclusive, accessible digital experiences
+`;
+
+    const blob = new Blob([cvContent], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Jessica_Afriyie_CV.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus(''), 3000);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormStatus('invalid');
+      setTimeout(() => setFormStatus(''), 3000);
+      return;
+    }
+
+    setFormStatus('sending');
+    setTimeout(() => {
+      setFormStatus('success');
+      setFormData({ name: '', email: '', message: '' });
+      setTimeout(() => setFormStatus(''), 5000);
+    }, 1500);
+  };
+
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white' : 'bg-gradient-to-br from-blue-50 via-white to-pink-50 text-gray-900'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${darkMode ? 'bg-slate-900/80' : 'bg-white/80'} backdrop-blur-md border-b ${darkMode ? 'border-blue-500/20' : 'border-blue-200/50'}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div 
+              className="flex items-center gap-2 cursor-pointer" 
+              onClick={() => scrollToSection('home')}
+            >
+              {logoImage ? (
+                <img 
+                  src={logoImage} 
+                  alt="Jessica Afriyie Logo" 
+                  className="h-10 w-10 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-pink-400 flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">JA</span>
+                </div>
+              )}
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 via-pink-400 to-blue-400 bg-clip-text text-transparent hidden sm:block">
+                Jessica Afriyie
+              </span>
+            </div>
+            
+            <div className="hidden md:flex space-x-8">
+              {['Home', 'About', 'Experience', 'Projects', 'Skills', 'Contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className={`hover:text-blue-400 transition-colors relative ${activeSection === item.toLowerCase() ? 'text-blue-400' : ''}`}
+                >
+                  {item}
+                  {activeSection === item.toLowerCase() && (
+                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-400 via-pink-400 to-blue-400"></span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setDarkMode(!darkMode)}
+                className="p-2 rounded-full hover:bg-blue-500/20 transition-all"
+              >
+                {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              </button>
+              
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {mobileMenuOpen && (
+          <div className={`md:hidden ${darkMode ? 'bg-slate-900' : 'bg-white'} border-t ${darkMode ? 'border-blue-500/20' : 'border-blue-200/50'}`}>
+            <div className="px-4 py-4 space-y-3">
+              {['Home', 'About', 'Experience', 'Projects', 'Skills', 'Contact'].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="block w-full text-left px-3 py-2 rounded-lg hover:bg-blue-500/20 transition-colors"
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      <section id="home" className="min-h-screen flex items-center justify-center px-4 pt-16">
+        <div className="max-w-6xl mx-auto text-center">
+          <div className="mb-8">
+            <div className="w-40 h-40 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-400 via-pink-400 to-blue-500 p-1 animate-pulse">
+              <div className={`w-full h-full rounded-full ${darkMode ? 'bg-slate-900' : 'bg-white'} flex items-center justify-center overflow-hidden`}>
+                {profileImage ? (
+                  <img 
+                    src={profileImage} 
+                    alt="Jessica Afriyie" 
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                ) : (
+                  <span className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent">JA</span>
+                )}
+              </div>
+            </div>
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4">
+              <span className="block bg-gradient-to-r from-blue-400 via-pink-400 to-blue-400 bg-clip-text text-transparent animate-gradient bg-[length:200%_auto]">
+                Jessica Afriyie
+              </span>
+            </h1>
+            <div className="h-16 flex items-center justify-center">
+              <p className="text-2xl sm:text-3xl font-semibold bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent transition-all duration-500">
+                {titles[titleIndex]}
+              </p>
+            </div>
+            <p className={`text-lg ${darkMode ? 'text-blue-200' : 'text-gray-700'} max-w-2xl mx-auto mb-2`}>
+              Creative Technologist | 3D Content Creator | Cybersecurity Enthusiast
+            </p>
+            <div className="flex items-center justify-center gap-2 text-sm text-pink-400">
+              <MapPin className="w-4 h-4" />
+              <span>Accra, Ghana</span>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4 mb-8">
+            <button
+              onClick={handleDownloadCV}
+              className="px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg"
+            >
+              <Download className="w-5 h-5" />
+              Download CV
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className={`px-6 py-3 rounded-full ${darkMode ? 'bg-white/10 hover:bg-white/20' : 'bg-blue-100 hover:bg-blue-200'} transition-all transform hover:scale-105`}
+            >
+              Get In Touch
+            </button>
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <a href="https://github.com/obengjessica" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-blue-500/20 hover:bg-blue-500 transition-all transform hover:scale-110">
+              <Github className="w-5 h-5" />
+            </a>
+            <a href="https://www.linkedin.com/in/obeng-jessica-afriyie-1375aa329" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-pink-500/20 hover:bg-pink-500 transition-all transform hover:scale-110">
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a href="mailto:blaqluv233@gmail.com" className="p-3 rounded-full bg-blue-400/20 hover:bg-blue-400 transition-all transform hover:scale-110">
+              <Mail className="w-5 h-5" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className={`py-20 px-4 ${darkMode ? 'bg-slate-800/30' : 'bg-blue-50/50'}`}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
+            About Me
+          </h2>
+          
+          <div className="space-y-6 text-lg">
+            <p>
+              I'm a passionate creative technologist and front-end developer who loves transforming ideas into visually stunning and user-friendly digital experiences. I blend technology with art — from crafting intuitive interfaces to creating 3D animations and storytelling visuals. As a Cybersecurity Enthusiast, I prioritize secure coding practices and data protection in all my projects.
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-4 my-8">
+              <div className={`p-6 rounded-2xl ${darkMode ? 'bg-blue-500/10' : 'bg-blue-50'} border ${darkMode ? 'border-blue-500/20' : 'border-blue-200'} text-center transform hover:scale-105 transition-all`}>
+                <Calendar className="w-12 h-12 text-blue-400 mx-auto mb-3" />
+                <h3 className="text-2xl font-bold text-blue-400">2027</h3>
+                <p className="text-sm">Expected Graduation</p>
+              </div>
+              <div className={`p-6 rounded-2xl ${darkMode ? 'bg-pink-500/10' : 'bg-pink-50'} border ${darkMode ? 'border-pink-500/20' : 'border-pink-200'} text-center transform hover:scale-105 transition-all`}>
+                <Briefcase className="w-12 h-12 text-pink-400 mx-auto mb-3" />
+                <h3 className="text-2xl font-bold text-pink-400">6+</h3>
+                <p className="text-sm">Professional Experiences</p>
+              </div>
+              <div className={`p-6 rounded-2xl ${darkMode ? 'bg-blue-400/10' : 'bg-blue-50'} border ${darkMode ? 'border-blue-400/20' : 'border-blue-200'} text-center transform hover:scale-105 transition-all`}>
+                <Code className="w-12 h-12 text-blue-300 mx-auto mb-3" />
+                <h3 className="text-2xl font-bold text-blue-300">6+</h3>
+                <p className="text-sm">Projects Completed</p>
+              </div>
+            </div>
+            
+            <p>
+              Currently pursuing a BSc in Mathematical Sciences (Computer Science Department) at the University of Ghana, where I combine analytical thinking with creative design.
+            </p>
+            
+            <p>
+              Beyond coding, I've explored media, camera operations, and video editing during my internships at KFM TV and Yamaco Media. I'm also the co-founder of <span className="text-blue-400 font-semibold">Jezzerr Labs</span> and <span className="text-pink-400 font-semibold">AltFit Clothing Brand</span>, where I merge innovation, design, and entrepreneurship.
+            </p>
+            
+            <div className={`p-6 rounded-2xl ${darkMode ? 'bg-gradient-to-r from-blue-500/10 to-pink-500/10' : 'bg-gradient-to-r from-blue-50 to-pink-50'} border-2 ${darkMode ? 'border-blue-500/30' : 'border-blue-200'}`}>
+              <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-blue-400" />
+                Future Vision: Harmony
+              </h3>
+              <p>
+                My dream is to create a new programming language called <span className="font-bold text-pink-400">Harmony</span> — where music and code unite. Imagine using musical patterns like chorus for loops, beats for iterations, and melody for syntax flow. Making coding feel like composing music — artistic, rhythmic, and expressive.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="experience" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent">
+            Experience
+          </h2>
+          
+          <div className="space-y-8">
+            {experiences.map((exp, index) => (
+              <div
+                key={index}
+                className={`p-6 rounded-2xl ${darkMode ? 'bg-slate-800/50' : 'bg-white'} border-l-4 border-blue-400 hover:border-pink-500 transition-all transform hover:scale-[1.02] hover:shadow-2xl`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className={`p-3 rounded-xl ${darkMode ? 'bg-blue-500/20' : 'bg-blue-100'} text-blue-400`}>
+                    {exp.icon}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3">
+                      <h3 className="text-xl sm:text-2xl font-bold text-blue-400">{exp.role}</h3>
+                      <span className={`text-sm ${darkMode ? 'text-blue-200' : 'text-gray-600'} mt-1 sm:mt-0`}>{exp.period}</span>
+                    </div>
+                    <p className="text-pink-400 font-semibold mb-2">{exp.company}</p>
+                    <p className={darkMode ? 'text-blue-100' : 'text-gray-700'}>{exp.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" className={`py-20 px-4 ${darkMode ? 'bg-slate-800/30' : 'bg-blue-50/50'}`}>
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
+            Featured Projects
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.map((project, index) => (
+              <div
+                key={index}
+                className={`group p-6 rounded-2xl ${darkMode ? 'bg-slate-900/50' : 'bg-white'} border ${darkMode ? 'border-blue-500/20' : 'border-blue-200'} hover:border-pink-500 transition-all transform hover:scale-105 hover:shadow-2xl overflow-hidden`}
+              >
+                {/* Project Image */}
+                {project.image ? (
+                  <div className="relative h-48 -mx-6 -mt-6 mb-4 overflow-hidden rounded-t-2xl">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                  </div>
+                ) : (
+                  <div className={`h-48 -mx-6 -mt-6 mb-4 ${darkMode ? 'bg-gradient-to-br from-blue-500/20 to-pink-500/20' : 'bg-gradient-to-br from-blue-100 to-pink-100'} flex items-center justify-center rounded-t-2xl`}>
+                    <Code className="w-16 h-16 text-blue-400 opacity-50" />
+                  </div>
+                )}
+                
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-xl font-bold text-blue-400 group-hover:text-pink-400 transition-colors">{project.title}</h3>
+                  <span className={`text-xs px-3 py-1 rounded-full ${darkMode ? 'bg-pink-500/20' : 'bg-pink-100'} text-pink-400 whitespace-nowrap`}>
+                    {project.type}
+                  </span>
+                </div>
+                
+                <p className={`mb-4 ${darkMode ? 'text-blue-100' : 'text-gray-700'} text-sm`}>{project.description}</p>
+                
+                <div className="mb-4">
+                  <p className="text-sm text-pink-400 font-semibold mb-2">Role: {project.role}</p>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {project.tech.map((tech, i) => (
+                      <span key={i} className={`text-xs px-3 py-1 rounded-full ${darkMode ? 'bg-blue-500/20' : 'bg-blue-100'} text-blue-400`}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="space-y-1">
+                    {project.highlights.map((highlight, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-400 to-pink-400"></div>
+                        <span className={darkMode ? 'text-blue-200' : 'text-gray-600'}>{highlight}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" className="py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-pink-500 to-blue-400 bg-clip-text text-transparent">
+            Skills & Expertise
+          </h2>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Object.entries(skills).map(([category, skillList], index) => (
+              <div
+                key={index}
+                className={`p-6 rounded-2xl ${darkMode ? 'bg-slate-800/50' : 'bg-white'} border ${darkMode ? 'border-blue-500/20' : 'border-blue-200'} hover:border-pink-500 transition-all transform hover:scale-105 hover:shadow-xl`}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  {category.includes('Frontend') && <Code className="w-6 h-6 text-blue-400" />}
+                  {category.includes('Design') && <Palette className="w-6 h-6 text-pink-400" />}
+                  {category.includes('Creative') && <Video className="w-6 h-6 text-blue-400" />}
+                  {category.includes('Programming') && <Code className="w-6 h-6 text-pink-400" />}
+                  {category.includes('Tools') && <Shield className="w-6 h-6 text-blue-300" />}
+                  <h3 className="text-xl font-bold">{category}</h3>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {skillList.map((skill, i) => (
+                    <span
+                      key={i}
+                      className={`text-sm px-3 py-1 rounded-full ${darkMode ? 'bg-gradient-to-r from-blue-500/20 to-pink-500/20' : 'bg-gradient-to-r from-blue-50 to-pink-50'} hover:scale-105 transition-transform cursor-default`}
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" className={`py-20 px-4 ${darkMode ? 'bg-slate-800/30' : 'bg-blue-50/50'}`}>
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
+            Get In Touch
+          </h2>
+          
+          <p className={`text-lg mb-12 text-center ${darkMode ? 'text-blue-100' : 'text-gray-700'}`}>
+            I'm always excited to collaborate on innovative projects or discuss new opportunities. Let's create something amazing together!
+          </p>
+
+          <div className="grid md:grid-cols-2 gap-8 mb-12">
+            <div className={`p-6 rounded-2xl ${darkMode ? 'bg-slate-900/50' : 'bg-white'} border ${darkMode ? 'border-blue-500/20' : 'border-blue-200'}`}>
+              <h3 className="text-xl font-bold text-blue-400 mb-4">Contact Information</h3>
+              <div className="space-y-4">
+                <a href="mailto:blaqluv233@gmail.com" className="flex items-center gap-3 hover:text-blue-400 transition-colors">
+                  <Mail className="w-5 h-5 text-blue-400" />
+                  <span>blaqluv233@gmail.com</span>
+                </a>
+                <a href="https://wa.me/233591286053" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-pink-400 transition-colors">
+                  <Phone className="w-5 h-5 text-pink-400" />
+                  <span>+233 591 286 053</span>
+                </a>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-blue-300" />
+                  <span>Accra, Ghana</span>
+                </div>
+              </div>
+              <div className="flex gap-4 mt-6">
+                <a href="https://github.com/obengjessica" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-blue-500/20 hover:bg-blue-500 transition-all">
+                  <Github className="w-5 h-5" />
+                </a>
+                <a href="https://www.linkedin.com/in/obeng-jessica-afriyie-1375aa329" target="_blank" rel="noopener noreferrer" className="p-3 rounded-full bg-pink-500/20 hover:bg-pink-500 transition-all">
+                  <Linkedin className="w-5 h-5" />
+                </a>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className={`p-6 rounded-2xl ${darkMode ? 'bg-slate-900/50' : 'bg-white'} border ${darkMode ? 'border-blue-500/20' : 'border-blue-200'}`}>
+              <h3 className="text-xl font-bold text-pink-400 mb-4">Send a Message</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-2 rounded-lg ${darkMode ? 'bg-slate-800 border-blue-500/30' : 'bg-blue-50 border-blue-200'} border focus:border-blue-400 outline-none transition-colors`}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full px-4 py-2 rounded-lg ${darkMode ? 'bg-slate-800 border-blue-500/30' : 'bg-blue-50 border-blue-200'} border focus:border-blue-400 outline-none transition-colors`}
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Message</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={4}
+                    className={`w-full px-4 py-2 rounded-lg ${darkMode ? 'bg-slate-800 border-blue-500/30' : 'bg-blue-50 border-blue-200'} border focus:border-blue-400 outline-none transition-colors resize-none`}
+                    required
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full px-6 py-3 rounded-full bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 transition-all transform hover:scale-105 flex items-center justify-center gap-2 font-semibold"
+                >
+                  {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
+                  <Send className="w-5 h-5" />
+                </button>
+                {formStatus === 'success' && (
+                  <div className="flex items-center gap-2 text-green-400 text-sm">
+                    <CheckCircle className="w-5 h-5" />
+                    <span>Message sent successfully!</span>
+                  </div>
+                )}
+                {formStatus === 'error' && (
+                  <div className="text-red-400 text-sm">Please fill in all fields</div>
+                )}
+                {formStatus === 'invalid' && (
+                  <div className="text-red-400 text-sm">Please enter a valid email address</div>
+                )}
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <footer className={`py-8 px-4 border-t ${darkMode ? 'border-blue-500/20' : 'border-blue-200/50'}`}>
+        <div className="max-w-7xl mx-auto text-center">
+          <p className={darkMode ? 'text-blue-200' : 'text-gray-600'}>
+            © 2026 Jessica Afriyie | Built with React + Tailwind CSS | 💜 Ghana
+          </p>
+          <p className="text-sm bg-gradient-to-r from-blue-400 to-pink-400 bg-clip-text text-transparent mt-2 font-semibold">
+            Designed with creativity, coded with passion
+          </p>
+        </div>
+      </footer>
+
+      <style jsx>{`
+        @keyframes gradient {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          animation: gradient 3s ease infinite;
+        }
+      `}</style>
+    </div>
+  );
+};
+
+export default Portfolio;
